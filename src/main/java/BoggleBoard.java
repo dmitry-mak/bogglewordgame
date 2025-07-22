@@ -78,6 +78,11 @@ public class BoggleBoard {
         }
     }
 
+    public void generateNewBoard() {
+        shuffleCubes();
+        fillBoard();
+    }
+
     public char getCharAt(int row, int col) {
 // TODO: checking diapason + return symbol
         return 0;

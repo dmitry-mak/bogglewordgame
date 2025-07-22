@@ -1,12 +1,11 @@
 plugins {
     id 'java'
+    id 'org.openjfx.javafxplugin' version '0.0.10'
+    id 'application'
 }
 
 group = 'word.game.boggle'
 version = '1.0-SNAPSHOT'
-
-compileJava.options.encoding = "UTF-8"
-compileTestJava.options.encoding = "UTF-8"
 
 repositories {
     mavenCentral()
@@ -16,9 +15,30 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.0'
 }
 
+javafx {
+    version = "11"
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
 test {
     useJUnitPlatform()
     testLogging {
         events "passed", "skipped", "failed"
     }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.fork = true // Включаем возможность fork
+    options.forkOptions.jvmArgs = ["-Dfile.encoding=UTF-8"]
+}
+
+tasks.withType(Test) {
+    systemProperty "file.encoding", "UTF-8"
+    jvmArgs "-Dfile.encoding=UTF-8"
+}
+
+application {
+//    applicationDefaultJvmArgs = ["-Dfile.encoding=UTF-8"]
+    mainClass = 'word.game.boggle.Main'
 }
